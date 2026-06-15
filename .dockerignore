@@ -1,0 +1,6 @@
+docs/
+hls/
+*.mp4
+*.m4s
+.git/
+transcode.sh

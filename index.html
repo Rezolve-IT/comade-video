@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>CoMade — Capability Video</title>
+<style>
+  html,body{margin:0;height:100%;background:#000;overflow:hidden}
+  #wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  video{width:100%;height:100%;object-fit:contain;background:#000}
+  #logo{position:fixed;top:18px;left:18px;width:130px;opacity:.9;pointer-events:none;z-index:2}
+  #msg{color:#fff;font-family:system-ui,sans-serif}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <video id="v" controls playsinline></video>
+</div>
+<img id="logo" src="/comade.png" alt="CoMade">
+<script src="/hls.min.js"></script>
+<script>
+  var v = document.getElementById('v');
+  var src = '/hls/master.m3u8';
+  if (v.canPlayType('application/vnd.apple.mpegurl')) {
+    v.src = src;                              // Safari / iOS native HLS
+  } else if (window.Hls && Hls.isSupported()) {
+    var hls = new Hls({ startLevel: -1 });    // -1 = auto-select by bandwidth
+    hls.loadSource(src);
+    hls.attachMedia(v);
+  } else {
+    document.getElementById('wrap').innerHTML =
+      '<p id="msg">Your browser cannot play this video.</p>';
+  }
+</script>
+</body>
+</html>
